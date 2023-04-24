@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisbrochard <louisbrochard@student.42    +#+  +:+       +#+        */
+/*   By: lbrochar <lbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:27:43 by louisbrocha       #+#    #+#             */
-/*   Updated: 2023/02/17 18:41:10 by louisbrocha      ###   ########.fr       */
+/*   Updated: 2023/04/24 15:17:06 by lbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,44 +38,44 @@ char	*ft_backup(char *backup)
 	return (s);
 }
 
-char    *ft_get_line (char *backup)
+char	*ft_get_line(char *backup)
 {
-    char    *s; 
-    int i;
+	char	*s;
+	int		i;
 
-    i = 0; 
-    if (!backup[i])
-        return (NULL);
-    while (backup[i] && backup[i] != '\n')
-        i++;
-    s = (char *)malloc((i + 2) * sizeof(char));
-    if (!s)
-        return (NULL);
-    i = 0;
-    while (backup[i] && backup[i] != '\n')
-    {
-        s[i] = backup[i];
-        i++;
-    }
-    if (backup[i] == '\n')
-    {
-        s[i] = backup[i];
-        i++;
-    }
-    s[i] = '\0';
-    return (s);
+	i = 0;
+	if (!backup[i])
+		return (NULL);
+	while (backup[i] && backup[i] != '\n')
+		i++;
+	s = (char *)malloc((i + 2) * sizeof(char));
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (backup[i] && backup[i] != '\n')
+	{
+		s[i] = backup[i];
+		i++;
+	}
+	if (backup[i] == '\n')
+	{
+		s[i] = backup[i];
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
 }
 
-char    *ft_read_backup(int fd, char *backup)
+char	*ft_read_backup(int fd, char *backup)
 {
-    char    *buffer;
-    int     nb_bytes;
+	char	*buffer;
+	int		nb_bytes;
 
-    buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-    if (!buffer)
-        return (NULL);
-    nb_bytes = 1;
-    while (!ft_strchr(backup, '\n') && nb_bytes != 0)
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	nb_bytes = 1;
+	while (!ft_strchr(backup, '\n') && nb_bytes != 0)
 	{
 		nb_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (nb_bytes == -1)
@@ -90,17 +90,17 @@ char    *ft_read_backup(int fd, char *backup)
 	return (backup);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *backup;
-    char        *line;
+	static char	*backup;
+	char		*line;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (0);
-    backup = ft_read_backup(fd, backup);
-    if (!backup)
-        return(NULL);
-    line = ft_get_line(backup);
-    backup = ft_backup(backup);
-    return (line);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	backup = ft_read_backup(fd, backup);
+	if (!backup)
+		return (NULL);
+	line = ft_get_line(backup);
+	backup = ft_backup(backup);
+	return (line);
 }
