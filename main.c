@@ -10,11 +10,18 @@ int main(void) {
     }
     
     char *line;
-    while ((line = get_next_line(fd))) {
-        printf("%s\n", line);
-        free(line);
-    }
-    
+//    while ((line = get_next_line(fd))) {
+ //       printf("%s\n", line);
+  //      free(line);
+   // }
+
+    line = get_next_line(fd);
+    printf("%s\n", line);
+    free(line);   
+    printf("Pause\n");
+    line = get_next_line(fd);
+    printf("%s\n", line);
+    free(line);  
     close(fd);
     return 0;
 }
